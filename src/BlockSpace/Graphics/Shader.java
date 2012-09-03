@@ -23,9 +23,6 @@ public class Shader {
     private int vertexShader;
     private int fragmentShader;
     
-    private int projLocation;
-    private int modelviewLocation;
-    
     private static int loadShader(String path, int type)
     {
         StringBuilder source = new StringBuilder();
@@ -65,9 +62,6 @@ public class Shader {
         glAttachShader(programID, vertexShader);
         glAttachShader(programID, fragmentShader);
         glLinkProgram(programID);
-        
-        projLocation = glGetUniformLocation(programID, "projection");
-        modelviewLocation = glGetUniformLocation(programID, "modelview");
     }
     
     public void setAttribute(int attribID, String attribName)
@@ -75,7 +69,19 @@ public class Shader {
         glBindAttribLocation(programID, attribID, attribName);
     }
     
-    public void bind(FloatBuffer projectionMatrix, FloatBuffer modelviewMatrix)
+    public void setUniform4(String name, FloatBuffer vec4)
+    {
+        int uniformLocation = glGetUniformLocation(programID, name);
+        glUniform4(uniformLocation, vec4);
+    }
+    
+    public void setUniformMatrix4(String name, FloatBuffer mat4)
+    {
+        int uniformLocation = glGetUniformLocation(programID, name);
+        glUniformMatrix4(uniformLocation, false, mat4);
+    }
+    
+    public void bind()
     {
         glValidateProgram(programID);
         int glError = glGetError();
@@ -85,8 +91,6 @@ public class Shader {
             System.exit(-1);
         }
         glUseProgram(programID);
-        glUniformMatrix4(projLocation, false, projectionMatrix);
-        glUniformMatrix4(modelviewLocation, false, modelviewMatrix);
     }
     
     public void clear()

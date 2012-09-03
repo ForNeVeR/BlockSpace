@@ -113,7 +113,9 @@ public class BlockDrawHelper {
         glGetFloat(GL_PROJECTION_MATRIX, projMatrix);
         glGetFloat(GL_MODELVIEW_MATRIX, modelviewMatrix);
         
-        shader.bind(projMatrix,modelviewMatrix);
+        shader.bind();
+        shader.setUniformMatrix4("projection", projMatrix);
+        shader.setUniformMatrix4("modelview", modelviewMatrix);
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboiID);
         glDrawElements(GL_QUADS, indices.length, GL_UNSIGNED_BYTE, 0);
