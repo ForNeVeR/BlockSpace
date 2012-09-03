@@ -41,6 +41,8 @@ public class Main {
         glLoadIdentity();
         gluPerspective(90.0f, ((float)1024)/((float)768), 0.1f, 1000.0f);
         glMatrixMode(GL_MODELVIEW);
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LESS);
         
         BlockDrawHelper.Init();
         
