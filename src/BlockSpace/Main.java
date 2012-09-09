@@ -43,20 +43,33 @@ public class Main {
         glMatrixMode(GL_MODELVIEW);
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LESS);
+        glClearColor(0.4f, 0.6f, 0.9f, 0f);
         
         BlockDrawHelper.Init();
+        BlockGroup bg = new BlockGroup(0f, 0f, -5f);
+        bg.addBlock(0, 0, 0);
+        bg.addBlock(1, 0, 0);
+        bg.addBlock(0, 1, 0);
+        bg.addBlock(0, 0, 1);
+        bg.addBlock(0, 1, 1);
+        bg.addBlock(1, 0, 1);
+        bg.addBlock(1, 1, 0);
+        bg.addBlock(1, 1, 1);
+        
+        float rotation = 0.0f;
         
         while (!Display.isCloseRequested())
         {
-            glRotated(0.01, 0.3, 0.4, 0.5);
-            glTranslated(0.0001, 0.0001, -0.001);
-            glClearColor(0.4f, 0.6f, 0.9f, 0f);
+            glLoadIdentity();
+            rotation += 0.05f;
+            glTranslatef(bg.getAbsX(), bg.getAbsY(), bg.getAbsZ());
+            glRotatef(rotation, 1, 0, 0);
+            glRotatef(rotation, 0, 1, 0);
+            glRotatef(rotation, 0, 0, 1);
+            
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            BlockDrawHelper.DrawBlock(0, 0, 0);
-            BlockDrawHelper.DrawBlock(1, 0, 0);
-            BlockDrawHelper.DrawBlock(0, 1, 0);
-            BlockDrawHelper.DrawBlock(0, 0, 1);
+            bg.draw();
             
             Display.update();
         }
