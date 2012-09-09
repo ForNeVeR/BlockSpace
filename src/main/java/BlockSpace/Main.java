@@ -45,6 +45,8 @@ public class Main {
         glDepthFunc(GL_LESS);
         glClearColor(0.4f, 0.6f, 0.9f, 0f);
         
+        IController ctrl = new PlayerController(new Camera());
+        
         BlockDrawHelper.Init();
         BlockGroup bg = new BlockGroup(0f, 0f, -5f);
         bg.addBlock(0, 0, 0);
@@ -60,12 +62,17 @@ public class Main {
         
         while (!Display.isCloseRequested())
         {
+            glMatrixMode(GL_PROJECTION);
             glLoadIdentity();
-            rotation += 0.05f;
+            gluPerspective(90.0f, ((float)1024)/((float)768), 0.1f, 1000.0f);
+            ctrl.update();
+            glMatrixMode(GL_MODELVIEW);
+            glLoadIdentity();
+            //rotation += 0.05f;
             glTranslatef(bg.getAbsX(), bg.getAbsY(), bg.getAbsZ());
-            glRotatef(rotation, 1, 0, 0);
-            glRotatef(rotation, 0, 1, 0);
-            glRotatef(rotation, 0, 0, 1);
+            //glRotatef(rotation, 1, 0, 0);
+            //glRotatef(rotation, 0, 1, 0);
+            //glRotatef(rotation, 0, 0, 1);
             
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
