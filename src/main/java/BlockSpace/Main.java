@@ -1,10 +1,5 @@
 package BlockSpace;
 
-/**
- *
- * @author Hagane <deemson@gmail.com>
- */
-
 import BlockSpace.Graphics.BlockDrawHelper;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
@@ -18,8 +13,16 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.util.glu.GLU.*;
 
+/**
+ * Main program class.
+ *
+ * @author Hagane <deemson@gmail.com>
+ * @author von Never
+ */
 public class Main {
-    public static void main (String args[])
+	private static final int FPS = 60;
+
+	public static void main (String args[])
     {
         Main m = new Main();
         m.start();
@@ -79,6 +82,7 @@ public class Main {
             bg.draw();
             
             Display.update();
+			Display.sync(FPS);
         }
         
         BlockDrawHelper.DeInit();
