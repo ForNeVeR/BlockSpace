@@ -13,7 +13,10 @@ public class Quaternion
 
     public Quaternion(float aW, float aX, float aY, float aZ)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        w = aW;
+        x = aX;
+        y = aY;
+        z = aZ;
     }
 
     /**
