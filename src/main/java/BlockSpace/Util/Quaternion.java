@@ -51,7 +51,27 @@ public class Quaternion
     @Override
     public boolean equals(Object obj)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (obj.getClass() != this.getClass())
+        {
+            return false;
+        }
+        else
+        {
+            Quaternion other = (Quaternion) obj;
+            if (this.getW() == other.getW()
+                && this.getX() == other.getX()
+                && this.getY() == other.getY()
+                && this.getZ() == other.getZ())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 
     public Quaternion add(Quaternion addend)
