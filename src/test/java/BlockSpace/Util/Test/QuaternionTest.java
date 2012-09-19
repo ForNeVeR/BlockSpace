@@ -28,6 +28,8 @@ public class QuaternionTest extends TestCase
         Quaternion quat1 = new Quaternion (1f,0f,0f,0f);
         Quaternion quat2 = new Quaternion (1f,0f,0f,0f);
         Quaternion quat3 = new Quaternion (0f,0f,0f,0f);
+        assertFalse(quat1.equals(null));
+        assertTrue(quat1.equals(quat1));
         assertTrue(quat1.equals(quat2));
         assertFalse(quat1.equals(quat3));
     }
