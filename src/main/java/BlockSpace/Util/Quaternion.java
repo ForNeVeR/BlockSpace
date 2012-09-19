@@ -74,6 +74,16 @@ public class Quaternion
         }
     }
 
+    public int hashCode()
+    {
+        int hash = 5;
+        hash = 97 * hash + Float.floatToIntBits(this.w);
+        hash = 97 * hash + Float.floatToIntBits(this.x);
+        hash = 97 * hash + Float.floatToIntBits(this.y);
+        hash = 97 * hash + Float.floatToIntBits(this.z);
+        return hash;
+    }
+
     public Quaternion add(Quaternion addend)
     {
         float nW = this.getW() + addend.getW();
