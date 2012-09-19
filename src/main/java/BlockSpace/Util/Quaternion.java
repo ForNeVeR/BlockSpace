@@ -76,7 +76,11 @@ public class Quaternion
 
     public Quaternion add(Quaternion addend)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        float nW = this.getW() + addend.getW();
+        float nX = this.getX() + addend.getX();
+        float nY = this.getY() + addend.getY();
+        float nZ = this.getZ() + addend.getZ();
+        return new Quaternion(nW, nX, nY, nZ);
     }
 
     public Quaternion conjugate()
