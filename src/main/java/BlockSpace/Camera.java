@@ -4,7 +4,7 @@ package BlockSpace;
  *
  * @author Hagane <deemson@gmail.com>
  */
-import static org.lwjgl.opengl.GL11.*;
+import BlockSpace.Util.Quaternion;
 import static org.lwjgl.util.glu.GLU.*;
 
 public class Camera 
@@ -53,14 +53,23 @@ public class Camera
     }
     
     public void applyTransform()
-    {
-        //FIXTHATSHIT
-        float centerX = (float) (tX - Math.sin(Math.toRadians(rP))*Math.cos(Math.toRadians(rY+90)));
-        float centerY = (float) (tY - Math.sin(Math.toRadians(rP))*Math.sin(Math.toRadians(rY+90)));
-        float centerZ = (float) (tZ - Math.cos(Math.toRadians(rP)));
-        float upX = (float) (Math.sin(Math.toRadians(rP+90))*Math.cos(Math.toRadians(rY+90)));
-        float upY = (float) (Math.sin(Math.toRadians(rP+90))*Math.sin(Math.toRadians(rY+90)));
-        float upZ = (float) Math.cos(Math.toRadians(rP+90));
-        gluLookAt(tX, tY, tZ, centerX, centerY, centerZ, upX, upY, upZ);
+    {       
+        Quaternion qpitch = new Quaternion((float)Math.cos(Math.toRadians(rP)/2),
+                                              0f,
+                                              (float)Math.sin(Math.toRadians(rP)/2),
+                                              0f);
+        Quaternion qyaw = new Quaternion((float)Math.cos(Math.toRadians(rY)/2),
+                                         0f,
+                                         0f,
+                                         (float)Math.sin(Math.toRadians(rY)/2));
+        
+        Quaternion rotation = qpitch.multiply(qyaw).normalize();
+        
+        Quaternion eyeVector = rotation.multiply(new Quaternion(0, 0, 0, -1)).multiply(rotation.conjugate());
+        Quaternion upVector = rotation.multiply(new Quaternion(0, 0, 1, 0)).multiply(rotation.conjugate());
+        
+        gluLookAt(tX, tY, tZ,
+                  tX - eyeVector.getX(), tY - eyeVector.getY(), tZ - eyeVector.getZ(),
+                  upVector.getX(), upVector.getY(), upVector.getZ());
     }
 }
